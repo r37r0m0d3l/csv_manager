@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "rootDir": "src"
+  },
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*"
+  ]
+}

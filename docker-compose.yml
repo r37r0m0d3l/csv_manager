@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  mongo:
+    container_name: 'mongodb'
+    env_file:
+      - .env
+    image: 'mongo:4.2.3'
+    command: '--serviceExecutor adaptive'
+    ports:
+      - '${MONGO_PORT}:${MONGO_PORT}'
+    environment:
+      MONGO_INITDB_DATABASE: '${MONGO_DB}'
+      MONGO_INITDB_ROOT_USERNAME: '${MONGO_USER}'
+      MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASS}'
+    volumes:
+      - './docker/mongodb:/data/db'
+    restart: always

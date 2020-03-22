@@ -1,0 +1,13 @@
+{
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ],
+  "printWidth": 100,
+  "trailingComma": "all"
+}
