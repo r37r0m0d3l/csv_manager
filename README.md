@@ -12,12 +12,12 @@ npm install
 
 ## Up and running
 
-```sh
-docker compose up
-npm run build // build backend
-npm run build:front // build frontend 
-npm run app:cli:generate // generate csv file in `temp` folder
-npm start // start server
+```bash
+docker-compose up
+npm run build
+npm run build:front
+npm run app:cli:generate
+npm start
 ```
 
 ## NPM Scripts
