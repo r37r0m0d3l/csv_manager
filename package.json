@@ -1,4 +1,11 @@
 {
+  "author": "Anton Trofimenko",
+  "contributors": [
+    {
+      "email": "r37r0m0d3l@protonmail.com",
+      "name": "Anton Trofimenko"
+    }
+  ],
   "dependencies": {
     "@r37r0m0d3l/of": "2.1.1",
     "@uppy/core": "1.8.2",
@@ -43,6 +50,7 @@
   "engines": {
     "node": ">= 12.13 <14"
   },
+  "license": "MIT",
   "name": "csv_manager",
   "scripts": {
     "app:cli:generate": "node ./build/cli/generate.js --count=10",

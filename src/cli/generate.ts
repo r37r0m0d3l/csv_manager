@@ -19,25 +19,25 @@ function generateUser(): object {
   const generateCount = Number.parseInt(`${count || 10}`);
   const dir = "./temp/";
   const file = `${dir}/accounts.csv`;
-  const noDir = await ofError(fsExtra.ensureDir(dir));
-  if (noDir) {
-    cliExit(noDir.message);
+  const dirNotAccessible = await ofError(fsExtra.ensureDir(dir));
+  if (dirNotAccessible) {
+    cliExit(dirNotAccessible.message);
   }
-  const cantWrite = await ofError(fs.promises.access(dir, fs.constants.W_OK));
-  if (cantWrite) {
-    cliExit(cantWrite.message);
+  const dirNotWritable = await ofError(fs.promises.access(dir, fs.constants.W_OK));
+  if (dirNotWritable) {
+    cliExit(dirNotWritable.message);
   }
-  const noFileAccess = await ofError(fsExtra.ensureFile(file));
-  if (noFileAccess) {
-    cliExit(noFileAccess.message);
+  const fileNotAccessible = await ofError(fsExtra.ensureFile(file));
+  if (fileNotAccessible) {
+    cliExit(fileNotAccessible.message);
   }
-  const fileWritable = await ofError(fs.promises.access(file, fs.constants.W_OK));
-  if (fileWritable) {
-    cliExit(fileWritable.message);
+  const fileNotWritable = await ofError(fs.promises.access(file, fs.constants.W_OK));
+  if (fileNotWritable) {
+    cliExit(fileNotWritable.message);
   }
-  const notTruncated = await ofError(fs.promises.truncate(file, 0));
-  if (notTruncated) {
-    cliExit(notTruncated.message);
+  const fileNotTruncated = await ofError(fs.promises.truncate(file, 0));
+  if (fileNotTruncated) {
+    cliExit(fileNotTruncated.message);
   }
   const appender = fs.createWriteStream(file, { flags: "a" });
   appender.on("error", (streamError) => {
