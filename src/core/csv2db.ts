@@ -1,7 +1,8 @@
-import * as fs from "fs";
+import { createReadStream } from "fs";
 
 import * as csv2 from "csv2";
 import * as through2 from "through2";
+import { fileIsReadable } from "@hilesystem/local";
 import { ofError } from "@r37r0m0d3l/of";
 
 import { ANSI_CLEAR } from "../helpers/ansiClear";
@@ -11,9 +12,9 @@ import { modelAccount } from "../models/account";
 import { serviceDatabase } from "../services/database";
 
 async function csv2db(filePath: string): Promise<{ failed: number; successful: number }> {
-  const cantRead = await ofError(fs.promises.access(filePath, fs.constants.R_OK));
-  if (cantRead) {
-    throw cantRead;
+  const readable = await fileIsReadable(filePath);
+  if (readable !== true) {
+    throw readable;
   }
   const databaseError = await ofError(serviceDatabase.init());
   if (databaseError) {
@@ -27,7 +28,7 @@ async function csv2db(filePath: string): Promise<{ failed: number; successful: n
       debugCli(`Process completed with: ${eventName}`);
       resolve({ successful, failed });
     };
-    fs.createReadStream(filePath)
+    createReadStream(filePath)
       .pipe(csv2())
       .pipe(
         through2({ objectMode: true }, function (chunk, _enc, callback) {

@@ -1,9 +1,10 @@
-import * as fs from "fs";
+import { createWriteStream } from "fs";
 
 import * as faker from "faker";
 import * as fsExtra from "fs-extra";
 import { argv } from "yargs";
 import { ofError } from "@r37r0m0d3l/of";
+import { dirIsWritable, fileIsWritable, fileTruncate } from "@hilesystem/local";
 
 import { ANSI_CLEAR } from "../helpers/ansiClear";
 import { cliExit } from "../helpers/cliExit";
@@ -23,23 +24,23 @@ function generateUser(): object {
   if (dirNotAccessible) {
     cliExit(dirNotAccessible.message);
   }
-  const dirNotWritable = await ofError(fs.promises.access(dir, fs.constants.W_OK));
-  if (dirNotWritable) {
-    cliExit(dirNotWritable.message);
+  const isDirWritable = await dirIsWritable(dir);
+  if (isDirWritable !== true) {
+    cliExit(isDirWritable.message);
   }
   const fileNotAccessible = await ofError(fsExtra.ensureFile(file));
   if (fileNotAccessible) {
     cliExit(fileNotAccessible.message);
   }
-  const fileNotWritable = await ofError(fs.promises.access(file, fs.constants.W_OK));
-  if (fileNotWritable) {
-    cliExit(fileNotWritable.message);
+  const isFileWritable = await fileIsWritable(file);
+  if (isFileWritable !== true) {
+    cliExit(isFileWritable.message);
   }
-  const fileNotTruncated = await ofError(fs.promises.truncate(file, 0));
-  if (fileNotTruncated) {
-    cliExit(fileNotTruncated.message);
+  const isTruncated = await fileTruncate(file);
+  if (isTruncated !== true) {
+    cliExit(isTruncated.message);
   }
-  const appender = fs.createWriteStream(file, { flags: "a" });
+  const appender = createWriteStream(file, { flags: "a" });
   appender.on("error", (streamError) => {
     cliWrite(ANSI_CLEAR);
     cliExit(streamError.message);
