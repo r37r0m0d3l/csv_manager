@@ -5,6 +5,7 @@ import * as express from "express";
 import * as logger from "morgan";
 import * as path from "path";
 import * as sassMiddleware from "node-sass-middleware";
+import * as ExpressRateLimit from "express-rate-limit";
 
 import { routerAccounts } from "./routes/accounts";
 // noinspection TypeScriptPreferShortImport
@@ -15,6 +16,7 @@ const app = express();
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 
+app.use(new ExpressRateLimit({ max: 60, windowMs: 6e4 }));
 app.use(cors({ credentials: false, origin: false }));
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", req.headers.origin);
