@@ -3,6 +3,8 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "module": "commonjs",
@@ -17,6 +19,7 @@
     "strictNullChecks": false,
     "target": "es2018"
   },
+  "lib": ["es6"],
   "include": [
     "src/**/*",
     "__tests__/**/*"

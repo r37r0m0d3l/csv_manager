@@ -2,9 +2,10 @@ import { createWriteStream } from "fs";
 
 import * as faker from "faker";
 import * as fsExtra from "fs-extra";
+import notifier from "node-notifier";
 import { argv } from "yargs";
-import { ofError } from "@r37r0m0d3l/of";
 import { dirIsWritable, fileIsWritable, fileTruncate } from "@hilesystem/local";
+import { ofError } from "@r37r0m0d3l/of";
 
 import { ANSI_CLEAR } from "../helpers/ansiClear";
 import { cliExit } from "../helpers/cliExit";
@@ -46,8 +47,18 @@ function generateUser(): object {
     cliExit(streamError.message);
   });
   appender.on("finish", () => {
-    cliWrite(ANSI_CLEAR);
-    cliExit("Completed!");
+    notifier.notify(
+      {
+        message: `Generating ${generateCount} accounts into CSV file completed!`,
+        sound: true,
+        title: "CSV Manager",
+        wait: false,
+      },
+      () => {
+        cliWrite(ANSI_CLEAR);
+        cliExit("Completed!");
+      },
+    );
   });
   for (let index = 0; index < generateCount; index += 1) {
     cliWrite(`${ANSI_CLEAR}Writing: ${index}\n`);

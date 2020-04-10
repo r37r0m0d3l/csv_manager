@@ -1,6 +1,6 @@
-import * as express from "express";
+import express = require("express");
 import * as fsExtra from "fs-extra";
-import * as multer from "multer";
+import multer from "multer";
 import { of } from "@r37r0m0d3l/of";
 
 import { csv2db } from "../core/csv2db";

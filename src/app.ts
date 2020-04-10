@@ -1,11 +1,12 @@
-import * as cookieParser from "cookie-parser";
-import * as cors from "cors";
-import * as createError from "http-errors";
-import * as express from "express";
-import * as logger from "morgan";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import createError from "http-errors";
+import express = require("express");
+import logger from "morgan";
 import * as path from "path";
-import * as sassMiddleware from "node-sass-middleware";
-import * as ExpressRateLimit from "express-rate-limit";
+import sassMiddleware from "node-sass-middleware";
+import ExpressRateLimit = require("express-rate-limit");
+import morgan from "morgan";
 
 import { routerAccounts } from "./routes/accounts";
 // noinspection TypeScriptPreferShortImport
@@ -15,6 +16,7 @@ const app = express();
 
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
+app.use(morgan(':method :url :status :response-time ms'))
 
 app.use(new ExpressRateLimit({ max: 60, windowMs: 6e4 }));
 app.use(cors({ credentials: false, origin: false }));

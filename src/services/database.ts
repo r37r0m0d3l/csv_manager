@@ -2,13 +2,14 @@ import { config } from "dotenv";
 
 config();
 
-import * as mongoUriBuilder from "mongo-uri-builder";
-import * as mongoose from "mongoose";
+import mongoUriBuilder from "mongo-uri-builder";
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import { of } from "@r37r0m0d3l/of";
 
 import { debugHttp } from "../helpers/debugHttp";
 import { modelAccount } from "../models/account";
+
 
 class ServiceDatabase {
   protected connection: mongoose.Connection;

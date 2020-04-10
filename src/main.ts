@@ -3,26 +3,28 @@ config();
 
 import * as http from "http";
 import { ofError } from "@r37r0m0d3l/of";
+import castToInt from "@corefunc/corefunc/cast/to/int";
 
 import { app } from "./app";
 import { debugHttp } from "./helpers/debugHttp";
 import { serviceDatabase } from "./services/database";
 
-function normalizePort(val): boolean | number {
-  const port = parseInt(val, 10);
-  if (isNaN(port)) {
-    return val;
+function normalizePort(value: unknown): number {
+  const normalPort = castToInt(value, 0);
+  // const normalPort = +value;
+  if (normalPort >= 0 || normalPort <= 9999) {
+    return normalPort;
   }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
+  debugHttp(`[${normalPort}] is not valid port`);
+  process.exit(1);
 }
 
-const port = normalizePort(process.env.PORT || "3000");
+const port = normalizePort(process.env.PORT);
 app.set("port", port);
 
-function onError(error): void {
+const server = http.createServer(app);
+
+server.on("error", function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -39,18 +41,13 @@ function onError(error): void {
     default:
       throw error;
   }
-}
+});
 
-const server = http.createServer(app);
-
-function onListening(): void {
+server.on("listening", function onListening(): void {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   debugHttp(`Listening on: ${bind}`);
-}
-
-server.on("error", onError);
-server.on("listening", onListening);
+});
 
 (async (): Promise<void> => {
   const error = await ofError(serviceDatabase.init());

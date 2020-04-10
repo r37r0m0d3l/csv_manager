@@ -1,7 +1,7 @@
 import { createReadStream } from "fs";
 
-import * as csv2 from "csv2";
-import * as through2 from "through2";
+import csv2 from "csv2";
+import through2 from "through2";
 import { fileIsReadable } from "@hilesystem/local";
 import { ofError } from "@r37r0m0d3l/of";
 
