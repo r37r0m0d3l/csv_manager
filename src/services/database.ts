@@ -10,7 +10,6 @@ import { of } from "@r37r0m0d3l/of";
 import { debugHttp } from "../helpers/debugHttp";
 import { modelAccount } from "../models/account";
 
-
 class ServiceDatabase {
   protected connection: mongoose.Connection;
   protected uris: string;

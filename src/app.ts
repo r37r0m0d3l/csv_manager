@@ -16,7 +16,7 @@ const app = express();
 
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
-app.use(morgan(':method :url :status :response-time ms'))
+app.use(morgan(":method :url :status :response-time ms"));
 
 app.use(new ExpressRateLimit({ max: 60, windowMs: 6e4 }));
 app.use(cors({ credentials: false, origin: false }));
