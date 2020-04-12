@@ -4,11 +4,9 @@ config();
 
 import mongoUriBuilder from "mongo-uri-builder";
 import mongoose from "mongoose";
-import { Schema } from "mongoose";
 import { of } from "@r37r0m0d3l/of";
 
 import { debugHttp } from "../helpers/debugHttp";
-import { modelAccount } from "../models/account";
 
 class ServiceDatabase {
   protected connection: mongoose.Connection;
@@ -31,7 +29,7 @@ class ServiceDatabase {
     });
     debugHttp(`MongoDB URI: ${this.uris}`);
   }
-  public async init(): Promise<void> {
+  public async init(): Promise<Readonly<mongoose.Connection>> {
     return this.getConnection();
   }
   /**
@@ -53,16 +51,6 @@ class ServiceDatabase {
       debugHttp(error.message);
       throw error;
     }
-    [modelAccount /*, other models*/].forEach((model) => {
-      const entity = model.getName();
-      if (entity in this.models) {
-        return;
-      }
-      this.models[model.getName()] = this.connection.model(
-        model.getName(),
-        new Schema(model.getSchema(), { strict: false }),
-      );
-    });
     return this.connection;
   }
 }

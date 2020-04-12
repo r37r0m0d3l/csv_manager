@@ -24,7 +24,7 @@ async function csv2db(filePath: string): Promise<{ failed: number; successful: n
     let successful = 0;
     let failed = 0;
     const onFinal = (eventName: string): void => {
-      cliWrite(ANSI_CLEAR);
+      // cliWrite(ANSI_CLEAR);
       debugCli(`Process completed with: ${eventName}`);
       resolve({ successful, failed });
     };
@@ -43,7 +43,8 @@ async function csv2db(filePath: string): Promise<{ failed: number; successful: n
             .then(() => {
               successful += 1;
             })
-            .catch(() => {
+            .catch((error) => {
+              console.log({ error });
               failed += 1;
             })
             .finally(() => {

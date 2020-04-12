@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
-import { Vicis } from "vicis";
 import { of } from "@r37r0m0d3l/of";
+import { Schema } from "mongoose";
+import { Vicis } from "vicis";
 
 import { serviceDatabase } from "../services/database";
 
@@ -26,18 +27,28 @@ class ModelBasic {
   public getSchema(): object {
     return this.schema;
   }
-  protected async getConnection(): Promise<Readonly<mongoose.connection>> {
-    return serviceDatabase.getConnection();
+  private async getModel(): Promise<Readonly<mongoose.Connection>> {
+    const connection = await serviceDatabase.init();
+    const entity = this.getName();
+    if (!(entity in serviceDatabase.models)) {
+      serviceDatabase.models[entity] = connection.model(
+        entity,
+        new Schema(this.getSchema(), { strict: false }),
+      );
+    }
+    return serviceDatabase.models[entity];
   }
   public async readAll(): Promise<object[]> {
-    const [documents, notFound] = await of(serviceDatabase.models[this.getName()].find());
+    const Model = await this.getModel();
+    const [documents, notFound] = await of(Model.find());
     if (notFound) {
       throw notFound;
     }
     return this.serializer.fromArray(documents);
   }
   public async readById(id: string): Promise<object> {
-    const [document, notFound] = await of(serviceDatabase.models[this.getName()].findById(id));
+    const Model = await this.getModel();
+    const [document, notFound] = await of(Model.findById(id));
     if (notFound) {
       throw notFound;
     }
@@ -47,9 +58,9 @@ class ModelBasic {
     return this.serializer.data(document).getData();
   }
   public async create(document: object): Promise<object> {
-    const Model = serviceDatabase.models[this.getName()];
-    const model = new Model(document);
-    const [savedDocument, notCreated] = await of(model.save());
+    const Model = await this.getModel();
+    const record = new Model(document);
+    const [savedDocument, notCreated] = await of(record.save());
     if (notCreated) {
       throw notCreated;
     }
