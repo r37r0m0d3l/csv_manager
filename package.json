@@ -1,5 +1,8 @@
 {
   "author": "Anton Trofimenko",
+  "bugs": {
+    "url": "https://github.com/r37r0m0d3l/csv_manager/issues"
+  },
   "contributors": [
     {
       "email": "r37r0m0d3l@protonmail.com",
@@ -7,7 +10,7 @@
     }
   ],
   "dependencies": {
-    "@corefunc/corefunc": "0.0.54",
+    "@corefunc/corefunc": "0.0.56",
     "@hilesystem/local": "0.0.9",
     "@r37r0m0d3l/of": "2.2.1",
     "@uppy/core": "1.10.0",
@@ -37,6 +40,7 @@
     "vicis": "1.5.0",
     "yargs": "15.3.1"
   },
+  "description": "Database filler with fake account for testing purposes",
   "devDependencies": {
     "@babel/core": "latest",
     "@types/node": "13.11.1",
@@ -46,7 +50,7 @@
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.1",
     "eslint-plugin-jest": "23.8.2",
-    "npm-package-json-lint": "4.6.0",
+    "npm-package-json-lint": "5.0.0",
     "npm-package-json-lint-config-default": "2.0.0",
     "ntl": "5.0.0",
     "prettier": "2.0.4",
@@ -59,14 +63,20 @@
   "engines": {
     "node": ">= 12.13 <14"
   },
+  "homepage": "https://github.com/r37r0m0d3l/csv_manager",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint:format:check",
       "pre-push": "npm run lint:format:check"
     }
   },
+  "keywords": [],
   "license": "MIT",
   "name": "csv_manager",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:r37r0m0d3l/csv_manager.git"
+  },
   "scripts": {
     "app:cli:generate": "node ./build/cli/generate.js --count=10",
     "app:cli:import": "node ./build/cli/import.js --uri=./temp/accounts.csv",

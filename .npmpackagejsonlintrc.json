@@ -16,7 +16,6 @@
     "name-format": "error",
     "name-type": "error",
     "no-restricted-dependencies": ["error", ["gulping-npm-package-json-lint"]],
-    "no-restricted-invalid-devDependencies": ["error", ["gulping-npm-package-json-lint"]],
     "no-restricted-pre-release-dependencies": ["error", ["gulping-npm-package-json-lint"]],
     "no-restricted-pre-release-devDependencies": ["error", ["gulping-npm-package-json-lint"]],
     "preferGlobal-type": "error",
@@ -33,7 +32,7 @@
     "require-repository": "error",
     "require-version": "error",
     "scripts-type": "error",
-    "valid-values-author": ["error", ["Thomas Lindner"]],
+    "valid-values-author": ["error", ["Anton Trofimenko"]],
     "valid-values-private": ["error", [false]],
     "version-format": "error",
     "version-type": "error"
