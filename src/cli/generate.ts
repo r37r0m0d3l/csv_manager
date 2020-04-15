@@ -1,11 +1,15 @@
 import { createWriteStream } from "fs";
 
 import * as faker from "faker";
-import * as fsExtra from "fs-extra";
 
 import { argv } from "yargs";
-import { dirIsWritable, fileIsWritable, fileTruncate } from "@hilesystem/local";
-import { ofError } from "@r37r0m0d3l/of";
+import {
+  createDirectory,
+  createFile,
+  dirIsWritable,
+  fileIsWritable,
+  fileTruncate,
+} from "@hilesystem/local";
 
 import { ANSI_CLEAR } from "../helpers/ansiClear";
 import { cliExit } from "../helpers/cliExit";
@@ -22,16 +26,16 @@ function generateUser(): object {
   const generateCount = Number.parseInt(`${count || 10}`);
   const dir = "./temp/";
   const file = `${dir}/accounts.csv`;
-  const dirNotAccessible = await ofError(fsExtra.ensureDir(dir));
-  if (dirNotAccessible) {
+  const dirNotAccessible = await createDirectory(dir);
+  if (dirNotAccessible !== true) {
     cliExit(dirNotAccessible.message);
   }
   const isDirWritable = await dirIsWritable(dir);
   if (isDirWritable !== true) {
     cliExit(isDirWritable.message);
   }
-  const fileNotAccessible = await ofError(fsExtra.ensureFile(file));
-  if (fileNotAccessible) {
+  const fileNotAccessible = await createFile(file);
+  if (fileNotAccessible !== true) {
     cliExit(fileNotAccessible.message);
   }
   const isFileWritable = await fileIsWritable(file);
