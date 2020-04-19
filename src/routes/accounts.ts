@@ -21,7 +21,7 @@ routerAccounts
     res.status(200).jsonp({ ok: true, ...result });
   })
   .get("/", async function (_req, res) {
-    const [result, error] = await of(modelAccount.readAll());
+    const [result, error] = await of(modelAccount.readAllAsJSON());
     if (error) {
       res.status(500).send("500 Internal Server Error");
       return;
@@ -29,7 +29,7 @@ routerAccounts
     res.jsonp(result);
   })
   .get("/download", async function (_req, res) {
-    const [result, error] = await of(modelAccount.readAll());
+    const [result, error] = await of(modelAccount.readAllAsJSON());
     if (error) {
       debugHttp(error.message);
       res.status(500).send("500 Internal Server Error");
@@ -59,7 +59,7 @@ routerAccounts
       res.status(422).send("422 Unprocessable Entity");
       return;
     }
-    const [result, error] = await of(modelAccount.readById(id));
+    const [result, error] = await of(modelAccount.readByIdAsJSON(id));
     if (error) {
       debugHttp(error.message);
       res.status(500).send("500 Internal Server Error");
