@@ -4,7 +4,7 @@ import createError from "http-errors";
 import express = require("express");
 import logger from "morgan";
 import * as path from "path";
-import sassMiddleware from "node-sass-middleware";
+// import sassMiddleware from "node-sass-middleware";
 import ExpressRateLimit = require("express-rate-limit");
 import morgan from "morgan";
 
@@ -30,14 +30,14 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  sassMiddleware({
-    src: path.join(__dirname, "../public"),
-    dest: path.join(__dirname, "../public"),
-    indentedSyntax: true,
-    sourceMap: true,
-  }),
-);
+// app.use(
+//   sassMiddleware({
+//     src: path.join(__dirname, "../public"),
+//     dest: path.join(__dirname, "../public"),
+//     indentedSyntax: true,
+//     sourceMap: true,
+//   }),
+// );
 app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/", routerIndex);

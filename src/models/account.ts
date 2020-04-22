@@ -1,18 +1,19 @@
 import { Vicis } from "vicis";
-import { cast, rename, serializable, serialize } from "@vicis/decorators";
+import { Serialize, cast, rename, serialize } from "@vicis/decorators";
 
 import { ModelBasic } from "./basic";
 
+@Serialize()
 class SerializedBasic {
   public constructor(model: object) {
     Object.assign(this, model);
   }
-  public toJSON(): object {
-    return this;
+  public asJSON(): object {
+    return JSON.parse(JSON.stringify(this));
   }
 }
 
-@serializable()
+@Serialize()
 class SerializedAccount extends SerializedBasic {
   @serialize()
   public id: string;
@@ -32,11 +33,11 @@ class ModelAccount extends ModelBasic {
     super(name, schema, serialization);
   }
   public async readByIdAsJSON(id: string): Promise<object> {
-    return new SerializedAccount(await this.readById(id)).toJSON();
+    return new SerializedAccount(await this.readById(id)).asJSON();
   }
   public async readAllAsJSON(): Promise<object[]> {
     const accounts = await this.readAll();
-    return accounts.map((account) => new SerializedAccount(account).toJSON());
+    return accounts.map((account) => new SerializedAccount(account).asJSON());
   }
 }
 
