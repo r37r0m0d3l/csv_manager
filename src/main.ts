@@ -46,7 +46,11 @@ server.on("error", function onError(error: NodeJS.ErrnoException): void {
 server.on("listening", function onListening(): void {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
-  debugHttp(`Listening on: ${bind}`);
+  if (typeof addr === "string") {
+    debugHttp(`Listening on ${bind}: ${addr}`);
+  } else {
+    debugHttp(`Listening on ${bind}: http://localhost:${addr.port}`);
+  }
 });
 
 (async (): Promise<void> => {
