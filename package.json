@@ -38,7 +38,8 @@
     "through2": "3.0.1",
     "tslib": "1.11.1",
     "vicis": "1.5.1",
-    "yargs": "15.3.1"
+    "yargs": "15.3.1",
+    "snyk": "^1.316.1"
   },
   "description": "Database filler with fake account for testing purposes",
   "devDependencies": {
@@ -100,7 +101,10 @@
     "package:upgrade": "npm-check --update",
     "restart": "npm run build:clean && npm run build && npm run start",
     "start": "node ./build/main.js",
-    "start:debug": "node --trace-warnings ./build/main.js"
+    "start:debug": "node --trace-warnings ./build/main.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "snyk": true
 }
