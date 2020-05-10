@@ -1,5 +1,5 @@
 import express = require("express");
-import * as fsExtra from "fs-extra";
+import { remove } from "@hilesystem/local";
 import multer from "multer";
 import { of } from "@r37r0m0d3l/of";
 
@@ -17,7 +17,7 @@ routerAccounts
       res.status(500).send("500 Internal Server Error");
       return;
     }
-    await of(fsExtra.remove(req.file.path));
+    await remove(req.file.path);
     res.status(200).jsonp({ ok: true, ...result });
   })
   .get("/", async function (_req, res) {
