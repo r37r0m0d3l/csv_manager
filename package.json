@@ -37,7 +37,7 @@
     "through2": "3.0.1",
     "tslib": "^1.11.2",
     "vicis": "1.6.0",
-    "yargs": "15.3.1"
+    "yargs": "16.0.0"
   },
   "description": "Database filler with fake account for testing purposes",
   "devDependencies": {
