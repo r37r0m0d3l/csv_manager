@@ -10,7 +10,7 @@
     }
   ],
   "dependencies": {
-    "@corefunc/corefunc": "0.0.69",
+    "@corefunc/corefunc": "0.1.29",
     "@hilesystem/local": "^0.1.4",
     "@r37r0m0d3l/of": "^2.4.0",
     "@uppy/core": "1.10.4",
